@@ -40,6 +40,12 @@ public class ColumnManager : MonoBehaviour {
         {
             GameObject newObject = new GameObject();
             colArray[i] = newObject.AddComponent<Column>();
+            //give name to each column
+            newObject.name = "Column_" + i;
+            //establish parent-child relationship
+            newObject.transform.parent = this.transform;
+            //number the column
+            colArray[i].currentColumnNumber = i;
         }
     }
 
