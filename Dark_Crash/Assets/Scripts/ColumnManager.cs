@@ -49,8 +49,12 @@ public class ColumnManager : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    internal void AssignNeighbour()
+    {
+        for (int i = 0; i < colArray.Length; i++)
+        {
+            //each column is assigned neighbour
+            colArray[i].AssignNeighbour();
+        }
+    }
 }

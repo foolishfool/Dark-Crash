@@ -21,22 +21,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Column : MonoBehaviour {
+public class Column : MonoBehaviour
+{
 
     // Column is generated dynamically so there is no need to use static instance
     public int currentColumnNumber = -999; // current column number , -999 is easy to check error
                                            // Use this for initialization
     internal List<Chess> chessArray = new List<Chess>(); //the chess collection that current column contains
 
-	void Start () {
+    void Start()
+    {
         for (int row = 0; row < GameManager.instance.IntRowNumber; row++)
         {
-           
+
             //get the prefabs
             GameObject prefabsObj = GameManager.instance.PrefablsArray[Random.Range(0, 6)];
             //clone prefabs 
             //GameManager.instance.ColumnSpace the space between columns
-            GameObject cloneObj = Instantiate(prefabsObj, new Vector3(currentColumnNumber *GameManager.instance.ColumnSpace, -row, prefabsObj.transform.position.z), Quaternion.identity);
+            GameObject cloneObj = Instantiate(prefabsObj, new Vector3(currentColumnNumber * GameManager.instance.ColumnSpace, -row, prefabsObj.transform.position.z), Quaternion.identity);
             // establish parent-child relationship
             cloneObj.transform.parent = this.transform;
             //specify the scale of chess
@@ -45,7 +47,7 @@ public class Column : MonoBehaviour {
             chessArray.Add(cloneObj.GetComponent<Chess>());
         }
 
-	}
+    }
 
     //assign neighbour
     internal void AssignNeighbour()
@@ -65,12 +67,12 @@ public class Column : MonoBehaviour {
             }
             //right
 
-            if (currentColumnNumber == ColumnManager.instance.colArray.Length -1 )
+            if (currentColumnNumber == ColumnManager.instance.colArray.Length - 1)
             {
                 chessArray[row].chessNeighbour[1] = null;
             }
             else
-            {               
+            {
                 chessArray[row].chessNeighbour[1] = ColumnManager.instance.colArray[currentColumnNumber + 1].chessArray[row];//right column's chess
             }
             //up
@@ -79,19 +81,20 @@ public class Column : MonoBehaviour {
                 chessArray[row].chessNeighbour[2] = null;
             }
             else
-            {             
+            {
                 chessArray[row].chessNeighbour[2] = chessArray[row - 1];//up chess in the same column
             }
             //down
-            if (row == chessArray.Count -1 ) 
+            if (row == chessArray.Count - 1)
             {
                 chessArray[row].chessNeighbour[3] = null;
             }
             else
-            {   
+            {
                 chessArray[row].chessNeighbour[3] = chessArray[row + 1];//down chess in the same column
 
             }
         }
 
+    }
 }

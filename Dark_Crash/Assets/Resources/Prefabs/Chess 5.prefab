@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33122356405478860}
   - component: {fileID: 64261666796377212}
   - component: {fileID: 23949036737738928}
+  - component: {fileID: 114637990754638214}
   m_Layer: 0
   m_Name: Chess 5
   m_TagString: Untagged
@@ -95,3 +96,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114637990754638214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336094570626398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a763b2a6222aea34992d9a5e5a622a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chessNeighbour:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

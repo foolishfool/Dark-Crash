@@ -25,21 +25,21 @@ public class Chess : MonoBehaviour {
 
     public Chess[] chessNeighbour = new Chess[4]; //each chess's neighbour left/right/up/down neigbhour, represent by 0/1/2/3
 
-    internal string strNeighourLeft1 = "Left1";
-    internal string strNeighourLeft2 = "Left2";
-    internal string strNeighourRight1 = "Right1";
-    internal string strNeighourRight2 = "Right2";
-    internal string strNeighourDown1 = "Down1";
-    internal string strNeighourDown2 = "Down2";
-    internal string strNeighourUp1 = "Up1";
-    internal string strNeighourUp2 = "Up2";
+    internal string strNeighbourLeft1 = "Left1";
+    internal string strNeighbourLeft2 = "Left2";
+    internal string strNeighbourRight1 = "Right1";
+    internal string strNeighbourRight2 = "Right2";
+    internal string strNeighbourDown1 = "Down1";
+    internal string strNeighbourDown2 = "Down2";
+    internal string strNeighbourUp1 = "Up1";
+    internal string strNeighbourUp2 = "Up2";
 
     // Use this for initialization
     void Start () {
 		
 	}
+       
     //allocate neighbour
-
 
     internal void AssignNeighbourNames()
     {
@@ -49,31 +49,72 @@ public class Chess : MonoBehaviour {
             Debug.LogError(string.Format("[Chess.cs/AssignNeighbour()] illegal parameter!, please check!"));
         }
         //left
-        AssignNeighbourName(strNeighourLeft1, strNeighourLeft2, 0);
-        //right
-        AssignNeighbourName(strNeighourRight1, strNeighourRight2, 0);
-        //up
-        AssignNeighbourName(strNeighourUp1, strNeighourUp2, 0);
-        //down
-        AssignNeighbourName(strNeighourDown1, strNeighourDown2, 0);
-
-    }
-    //assign name to neigbhour chesses
-    internal void AssignNeighbourName(string neighbourString1, string neighbourString2, int neighbourNumber)
-    {
-        if (chessNeighbour[neighbourNumber] != null)
+        if (chessNeighbour[0] != null)
         {
-            neighbourString1 = chessNeighbour[neighbourNumber].name;
-            if (chessNeighbour[neighbourNumber].chessNeighbour[neighbourNumber] != null)
+            strNeighbourLeft1 = chessNeighbour[0].name;
+
+            if (chessNeighbour[0].chessNeighbour[0] != null)
             {
-                neighbourString2 = chessNeighbour[neighbourNumber].chessNeighbour[neighbourNumber].name;
+                strNeighbourLeft2 = chessNeighbour[0].chessNeighbour[0].name;
+
             }
         }
 
+        //right
+
+        if (chessNeighbour[1] != null)
+        {
+            strNeighbourRight1 = chessNeighbour[1].name;
+
+            if (chessNeighbour[1].chessNeighbour[1] != null)
+            {
+                strNeighbourRight2 = chessNeighbour[1].chessNeighbour[1].name;
+
+            }
+        }
+
+        //up
+
+        if (chessNeighbour[2] != null)
+        {
+            strNeighbourUp1 = chessNeighbour[2].name;
+
+            if (chessNeighbour[2].chessNeighbour[2] != null)
+            {
+                strNeighbourUp2 = chessNeighbour[2].chessNeighbour[2].name;
+
+            }
+        }
+
+        //down
+
+        if (chessNeighbour[3] != null)
+        {
+            strNeighbourDown1 = chessNeighbour[3].name;
+
+            if (chessNeighbour[3].chessNeighbour[3] != null)
+            {
+                strNeighbourDown2 = chessNeighbour[3].chessNeighbour[3].name;
+
+            }
+        }
+
+
     }
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    //test method
+/*   public void TestAssignNeighbour()
+    {
+        print("");
+        print("");
+        print("strNeighbourLeft1= " + strNeighbourLeft1);
+        print("strNeighbourLeft2= " + strNeighbourLeft2);
+        print("strNeighbourRight1= " + strNeighbourRight1);
+        print("strNeighbourRight2= " + strNeighbourRight2);
+        print("strNeighbourUp1= " + strNeighbourUp1);
+        print("strNeighbourUp2= " + strNeighbourUp2);
+        print("strNeighbourDown1= " + strNeighbourDown1);
+        print("strNeighbourDown2= " + strNeighbourDown2);
+    } 
+    */
 }
