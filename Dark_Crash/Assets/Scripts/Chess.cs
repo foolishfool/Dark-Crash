@@ -25,6 +25,8 @@ public class Chess : MonoBehaviour {
 
     public Chess[] chessNeighbour = new Chess[4]; //each chess's neighbour left/right/up/down neigbhour, represent by 0/1/2/3
 
+    internal bool canEliminate = false; //whether current chess can be eliminated
+
     internal string strNeighbourLeft1 = "Left1";
     internal string strNeighbourLeft2 = "Left2";
     internal string strNeighbourRight1 = "Right1";
@@ -38,9 +40,11 @@ public class Chess : MonoBehaviour {
     void Start () {
 		
 	}
-       
-    //allocate neighbour
 
+
+    /// <summary>
+    /// allocate neighbour
+    /// </summary>
     internal void AssignNeighbourNames()
     {
         //parameter check
@@ -102,19 +106,67 @@ public class Chess : MonoBehaviour {
 
     }
 
-    //test method
-/*   public void TestAssignNeighbour()
+    //check whether a certain chess can be eliminate
+
+    internal bool CanEliminateByChess(Chess chessObj)
     {
-        print("");
-        print("");
-        print("strNeighbourLeft1= " + strNeighbourLeft1);
-        print("strNeighbourLeft2= " + strNeighbourLeft2);
-        print("strNeighbourRight1= " + strNeighbourRight1);
-        print("strNeighbourRight2= " + strNeighbourRight2);
-        print("strNeighbourUp1= " + strNeighbourUp1);
-        print("strNeighbourUp2= " + strNeighbourUp2);
-        print("strNeighbourDown1= " + strNeighbourDown1);
-        print("strNeighbourDown2= " + strNeighbourDown2);
-    } 
-    */
+        bool canEliminate = false;
+        if (chessObj) //if the chessObj exists, it will disappear when being eliminated
+        {
+            if (
+                (chessObj.gameObject.name == strNeighbourLeft1 && chessObj.gameObject.name == strNeighbourLeft2) ||
+                (chessObj.gameObject.name == strNeighbourLeft1 && chessObj.gameObject.name == strNeighbourRight1) ||
+                (chessObj.gameObject.name == strNeighbourRight1 && chessObj.gameObject.name == strNeighbourRight2) ||
+                (chessObj.gameObject.name == strNeighbourUp1 && chessObj.gameObject.name == strNeighbourUp2) ||
+                (chessObj.gameObject.name == strNeighbourUp1 && chessObj.gameObject.name == strNeighbourDown1) ||
+                (chessObj.gameObject.name == strNeighbourDown1 && chessObj.gameObject.name == strNeighbourDown2)
+                )
+
+            {
+                canEliminate = true; //can be eliminated
+            }
+
+        }
+
+
+        return canEliminate;
+    }
+
+    //set the flag of whether eliminate
+    //the reason why we do not use CanEliminateByChess(Chess chessobj) to represent canEliminate is due to the flexibility
+    internal void MakeFlagIfCanElimnate()
+    {
+        if (CanEliminateByChess(this))
+            canEliminate = true;
+        else
+            canEliminate = false;
+    }
+    //test method
+    /*   public void TestAssignNeighbour()
+        {
+            print("");
+            print("");
+            print("strNeighbourLeft1= " + strNeighbourLeft1);
+            print("strNeighbourLeft2= " + strNeighbourLeft2);
+            print("strNeighbourRight1= " + strNeighbourRight1);
+            print("strNeighbourRight2= " + strNeighbourRight2);
+            print("strNeighbourUp1= " + strNeighbourUp1);
+            print("strNeighbourUp2= " + strNeighbourUp2);
+            print("strNeighbourDown1= " + strNeighbourDown1);
+            print("strNeighbourDown2= " + strNeighbourDown2);
+        } 
+        */
+
+    /// <summary>
+    /// destory  the chess
+    /// </summary>
+    
+    internal void DestroyChess()
+    {
+        if (canEliminate)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 }

@@ -25,20 +25,84 @@ using UnityEngine;
 public class ChessOperation : MonoBehaviour {
 
     public static ChessOperation instance;  // can be use to pass values among classes in a hihg effieiency
+    internal bool ifExistEliminateOption = false; //current board can eliminate
+
     private void Awake()
     {
         instance = this; //this means current class's instance
     }
 
-
     // Use this for initialization
-    void Start () {
+    void Start() {
 
-        Invoke("AssignNeighbour", 0.5f); //0.5 second delay , after UI is built
-        
-        Invoke("TestNeighbour", 1f);
+        //Invoke("TestNeighbour", 1f);
+
+        //check current board whether need to be eliminated
+        StartCoroutine("CheckIfCanEliminate");
+
     }
 
+    IEnumerator CheckIfCanEliminate()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        AssignNeighbour(); //assign neighbour
+
+        CheckIfExitEliminateOption();
+        //check whether current board has chess that can be eliminated
+        yield return new WaitForSeconds(0.5f);
+
+        if (ifExistEliminateOption)
+        {
+            //eliminate all chesses that can be eliminated
+            DestroryIfCanEliminate();
+            // add new chess
+            AddNewChessByTop();
+            //new cheess falling down animation
+
+            //iteratively check
+
+            //StartCoroutine("CheckIfCanEliminate");
+        }
+
+        else
+        {
+            print("there is no chess to be eliminated");
+        }
+
+    }
+    //add new chess
+
+    //check current board whether can be eliminated and set flag
+    private void CheckIfExitEliminateOption()
+    {
+        for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
+        {
+            for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++)
+            {
+                ColumnManager.instance.colArray[col].chessArray[row].MakeFlagIfCanElimnate();
+                if (ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
+                {
+                    ifExistEliminateOption = true; 
+                    // couldn't return here, or other chesses won't be set flag
+                }
+
+            }
+        }
+    }
+
+    private void DestroryIfCanEliminate()
+    {
+        for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
+        {
+            for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++)
+            {
+                ColumnManager.instance.colArray[col].chessArray[row].DestroyChess();
+
+            }
+        }
+
+    }
 
     //board assignes neighbour
 
@@ -64,14 +128,60 @@ public class ChessOperation : MonoBehaviour {
         }
     }
 
-    internal void TestNeighbour()
+    private void AddNewChessByTop()
+    {
+        //calculate the number of chess to be added for each column
+
+        for (int col = 0; col < ColumnManager.instance.colArray.Length; col++) //each column
+        {
+            for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++) //each chess
+            {
+                if (ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
+                {
+                    // the number of each column's adding chess
+                    ++ColumnManager.instance.colArray[col].needAddChessNumber;
+                   
+                }
+            }
+        }
+
+        //chess collection in each column need to remove  the script of chesses already be eliminated.
+        for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
+        {
+            // for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++) 
+            //current method is wrong
+            //@@@@@@@@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@@@@@@@@@@@
+            //after remove the chessArray.Count will change and each time the loop time will be different, so wil need to reverse the loop
+            for (int row = ColumnManager.instance.colArray[col].chessArray.Count -1 ; row >=0; row--)
+            { 
+                if (ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
+                {
+                    ColumnManager.instance.colArray[col].chessArray.RemoveAt(row);
+      
+                }
+            }
+        }
+
+        // add new chess
+        for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
+        {
+            ColumnManager.instance.colArray[col].AddNewChessByCurrentColumn();
+        }
+    }
+}
+
+
+
+
+ /*
+  *test methods  test assign neighbour methods
+  * internal void TestNeighbour()
     {
         for (int col = 0; col < ColumnManager.instance.colArray.Length; col++) //each column
         {
-            print(string.Format("col = {0}", col));
+      
             for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++) //each chess
-            {
-                print(string.Format("row = {0}", row));
+            {            
                  ColumnManager.instance.colArray[col].chessArray[row].AssignNeighbourNames();
                 //test
                // ColumnManager.instance.colArray[col].chessArray[row].TestAssignNeighbour();
@@ -79,4 +189,5 @@ public class ChessOperation : MonoBehaviour {
         }
 
     }
-}
+  */
+

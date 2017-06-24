@@ -27,7 +27,11 @@ public class Column : MonoBehaviour
     // Column is generated dynamically so there is no need to use static instance
     public int currentColumnNumber = -999; // current column number , -999 is easy to check error
                                            // Use this for initialization
+
+    internal int needAddChessNumber = 0; //the number that new chess need to be added after elimination
     internal List<Chess> chessArray = new List<Chess>(); //the chess collection that current column contains
+    
+
 
     void Start()
     {
@@ -61,7 +65,7 @@ public class Column : MonoBehaviour
             }
             else
             {
-                //********************* difficulty*********************//
+                //@@@@@@@@@@@@@@@@@@@@ difficulty@@@@@@@@@@@@@@@@@@@@@@@@@@@2//
                 chessArray[row].chessNeighbour[0] = ColumnManager.instance.colArray[currentColumnNumber - 1].chessArray[row];//left column's chess
 
             }
@@ -96,5 +100,26 @@ public class Column : MonoBehaviour
             }
         }
 
+    }
+
+    internal void AddNewChessByCurrentColumn()
+    {
+        //i represents the number of new added chesses
+        for (int i = 1; i <= needAddChessNumber; i++)
+        {
+            //get the prefabs
+            GameObject prefabsObj = GameManager.instance.PrefablsArray[Random.Range(0, 6)];
+            //clone prefabs 
+            //GameManager.instance.ColumnSpace the space between columns
+            GameObject cloneObj = Instantiate(prefabsObj, new Vector3(currentColumnNumber * GameManager.instance.ColumnSpace, i, prefabsObj.transform.position.z), Quaternion.identity);
+            // i, not -i because add chess on the top
+            // establish parent-child relationship
+            cloneObj.transform.parent = this.transform;
+            //specify the scale of chess
+            cloneObj.transform.localScale = new Vector3(GameManager.instance.ChessScale, GameManager.instance.ChessScale, GameManager.instance.ChessScale);
+            //store coloneobj into List<Chess>
+            //@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@@@@@@@@@@@
+            chessArray.Insert(0, cloneObj.GetComponent<Chess>()); //insert the chess collection form the top
+        }
     }
 }

@@ -53,7 +53,7 @@ public class ColumnManager : MonoBehaviour {
     {
         for (int i = 0; i < colArray.Length; i++)
         {
-            //each column is assigned neighbour
+            //each column is assigned a neighbour
             colArray[i].AssignNeighbour();
         }
     }
