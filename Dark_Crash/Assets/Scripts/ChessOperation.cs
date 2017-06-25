@@ -56,13 +56,16 @@ public class ChessOperation : MonoBehaviour {
         {
             //eliminate all chesses that can be eliminated
             DestroryIfCanEliminate();
+            yield return new WaitForSeconds(0.5f);
             // add new chess
             AddNewChessByTop();
+            yield return new WaitForSeconds(0.2f);
             //new cheess falling down animation
-
+            PlayNewChessDropDown();
+           
             //iteratively check
 
-            //StartCoroutine("CheckIfCanEliminate");
+            StartCoroutine("CheckIfCanEliminate");
         }
 
         else
@@ -102,6 +105,16 @@ public class ChessOperation : MonoBehaviour {
             }
         }
 
+    }
+
+    //new chess falls down
+    internal void PlayNewChessDropDown()
+    {
+        for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
+        {
+            //each column plays drop down animation
+            ColumnManager.instance.colArray[col].PlayNewChessDropDown();
+        }
     }
 
     //board assignes neighbour
@@ -168,6 +181,10 @@ public class ChessOperation : MonoBehaviour {
             ColumnManager.instance.colArray[col].AddNewChessByCurrentColumn();
         }
     }
+
+
+
+
 }
 
 

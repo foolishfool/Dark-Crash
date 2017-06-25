@@ -68,7 +68,7 @@ public class Column : MonoBehaviour
                 //@@@@@@@@@@@@@@@@@@@@ difficulty@@@@@@@@@@@@@@@@@@@@@@@@@@@2//
                 chessArray[row].chessNeighbour[0] = ColumnManager.instance.colArray[currentColumnNumber - 1].chessArray[row];//left column's chess
 
-            }
+            }   
             //right
 
             if (currentColumnNumber == ColumnManager.instance.colArray.Length - 1)
@@ -121,5 +121,18 @@ public class Column : MonoBehaviour
             //@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@@@@@@@@@@@
             chessArray.Insert(0, cloneObj.GetComponent<Chess>()); //insert the chess collection form the top
         }
+    }
+
+    //new chess's falling down animation
+    internal void PlayNewChessDropDown()
+    {
+        for (int i = 0; i < GameManager.instance.IntRowNumber; i++)
+        {
+            Chess chessObj = chessArray[i];
+            iTween.MoveTo(chessObj.gameObject, new Vector3(currentColumnNumber * GameManager.instance.ColumnSpace, -i, GameManager.instance.PrefablsArray[0].transform.position.z), 0.5f);
+        }
+        //@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@@@@@@@@@@@
+        //reset needAddChessNumber or will report an error ： the new AddChess will be more and more the chessArray will be overflow
+       needAddChessNumber = 0;
     }
 }
