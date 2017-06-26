@@ -26,7 +26,8 @@ public class ChessOperation : MonoBehaviour {
 
     public static ChessOperation instance;  // can be use to pass values among classes in a hihg effieiency
     internal bool ifExistEliminateOption = false; //current board can eliminate
-
+    internal Chess chessSelected1;  //the first chess that user selected
+    internal Chess chessSelected2; //the second chess that user selected
     private void Awake()
     {
         instance = this; //this means current class's instance
@@ -38,7 +39,7 @@ public class ChessOperation : MonoBehaviour {
         //Invoke("TestNeighbour", 1f);
 
         //check current board whether need to be eliminated
-        StartCoroutine("CheckIfCanEliminate");
+       StartCoroutine("CheckIfCanEliminate");
 
     }
 

@@ -43,12 +43,15 @@ public class Column : MonoBehaviour
             //clone prefabs 
             //GameManager.instance.ColumnSpace the space between columns
             GameObject cloneObj = Instantiate(prefabsObj, new Vector3(currentColumnNumber * GameManager.instance.ColumnSpace, -row, prefabsObj.transform.position.z), Quaternion.identity);
+            //store coloneobj into List<Chess>
+            chessArray.Add(cloneObj.GetComponent<Chess>());
             // establish parent-child relationship
             cloneObj.transform.parent = this.transform;
             //specify the scale of chess
             cloneObj.transform.localScale = new Vector3(GameManager.instance.ChessScale, GameManager.instance.ChessScale, GameManager.instance.ChessScale);
-            //store coloneobj into List<Chess>
-            chessArray.Add(cloneObj.GetComponent<Chess>());
+            // the column that contains current chess
+            cloneObj.GetComponent<Chess>().fromColumns = this;
+
         }
 
     }
@@ -120,6 +123,9 @@ public class Column : MonoBehaviour
             //store coloneobj into List<Chess>
             //@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@@@@@@@@@@@
             chessArray.Insert(0, cloneObj.GetComponent<Chess>()); //insert the chess collection form the top
+            // the column that contains current chess
+            cloneObj.GetComponent<Chess>().fromColumns = this;
+
         }
     }
 

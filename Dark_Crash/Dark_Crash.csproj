@@ -86,9 +86,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Chess.cs" />
     <Compile Include="Assets\Scripts\ChessOperation.cs" />
+    <Compile Include="Assets\Scripts\ChessTouch.cs" />
     <Compile Include="Assets\Scripts\Column.cs" />
     <Compile Include="Assets\Scripts\ColumnManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\SwapTwoChess.cs" />
     <Compile Include="Assets\Scripts\iTween.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

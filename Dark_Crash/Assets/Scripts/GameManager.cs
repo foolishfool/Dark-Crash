@@ -42,8 +42,5 @@ public class GameManager : MonoBehaviour {
 		//initialize the "chess board"
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

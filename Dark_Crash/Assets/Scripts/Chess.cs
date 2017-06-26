@@ -26,6 +26,9 @@ public class Chess : MonoBehaviour {
     public Chess[] chessNeighbour = new Chess[4]; //each chess's neighbour left/right/up/down neigbhour, represent by 0/1/2/3
 
     internal bool canEliminate = false; //whether current chess can be eliminated
+   
+
+    internal Column fromColumns;   //the clumn that contains the chess
 
     internal string strNeighbourLeft1 = "Left1";
     internal string strNeighbourLeft2 = "Left2";
@@ -165,6 +168,7 @@ public class Chess : MonoBehaviour {
     {
         if (canEliminate)
         {
+         //   iTween.Stop(this.gameObject);
             Destroy(this.gameObject);
         }
     }
