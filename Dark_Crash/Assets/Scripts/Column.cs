@@ -81,6 +81,7 @@ public class Column : MonoBehaviour
             else
             {
                 chessArray[row].chessNeighbour[1] = ColumnManager.instance.colArray[currentColumnNumber + 1].chessArray[row];//right column's chess
+                
             }
             //up
             if (row == 0)
@@ -136,6 +137,7 @@ public class Column : MonoBehaviour
         {
             Chess chessObj = chessArray[i];
             iTween.MoveTo(chessObj.gameObject, new Vector3(currentColumnNumber * GameManager.instance.ColumnSpace, -i, GameManager.instance.PrefablsArray[0].transform.position.z), 0.5f);
+       
         }
         //@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@@@@@@@@@@@
         //reset needAddChessNumber or will report an error ： the new AddChess will be more and more the chessArray will be overflow

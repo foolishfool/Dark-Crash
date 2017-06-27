@@ -61,6 +61,7 @@ public class SwapTwoChess : MonoBehaviour
         int chess2ColumnIndex = -999;
         chess1Column = chess1.fromColumns;
         chess2Column = chess2.fromColumns;
+       
 
         if (chess1Column == null || chess2Column == null)
         {
@@ -73,10 +74,6 @@ public class SwapTwoChess : MonoBehaviour
             if (chess1.GetInstanceID() == chess1Column.chessArray[i].GetInstanceID())
             {
                 chess1ColumnIndex = i;
-                print(chess1.GetInstanceID());
-                print(chess1Column.chessArray[i].GetInstanceID());
-                print(i);
-
             }
         }
 
@@ -84,10 +81,7 @@ public class SwapTwoChess : MonoBehaviour
         {
             if (chess2.GetInstanceID() == chess2Column.chessArray[j].GetInstanceID())
             {   
-                chess2ColumnIndex = j;
-                print(chess2.GetInstanceID());
-                print(chess2Column.chessArray[j].GetInstanceID());
-                print(j);
+                chess2ColumnIndex = j;       
             }
         }
         if (chess1ColumnIndex == -999 || chess2ColumnIndex == -999)
@@ -99,20 +93,19 @@ public class SwapTwoChess : MonoBehaviour
 
         //update the parent-child relationship that column contains the chess
         //@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
-        chess1.transform.parent = chess2Column.transform;
+        chess1.transform.parent = chess2Column.transform;   
         chess2.transform.parent = chess1Column.transform;
 
         chess1Column.chessArray.RemoveAt(chess1ColumnIndex);
         chess1Column.chessArray.Insert(chess1ColumnIndex, chess2);
         chess2Column.chessArray.RemoveAt(chess2ColumnIndex);
-        chess1Column.chessArray.Insert(chess2ColumnIndex, chess1);
+        chess2Column.chessArray.Insert(chess2ColumnIndex, chess1);
 
         //reset parameter
         //@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
         ChessOperation.instance.chessSelected1 = null;
         ChessOperation.instance.chessSelected2 = null;
-   
         //check the elimination circularly
-       ChessOperation.instance.StartCoroutine("CheckIfCanEliminate");
+      //  ChessOperation.instance.StartCoroutine("CheckIfCanEliminate");
     }
 }

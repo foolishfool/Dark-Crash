@@ -60,7 +60,7 @@ public class ChessOperation : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             // add new chess
             AddNewChessByTop();
-            yield return new WaitForSeconds(0.2f);
+          //  yield return new WaitForSeconds(0.2f);
             //new cheess falling down animation
             PlayNewChessDropDown();
            

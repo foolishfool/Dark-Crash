@@ -23,6 +23,8 @@ using UnityEngine;
 
 public class ChessTouch : MonoBehaviour {
 
+    internal bool canSwap = false;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -30,7 +32,7 @@ public class ChessTouch : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        SelectChess();
+       // SelectChess();
     }
 
     private void OnMouseDrag()
@@ -40,7 +42,7 @@ public class ChessTouch : MonoBehaviour {
 
     private void OnMouseUp()
     {
-       // SelectChess();
+       SelectChess();
     }
 
     internal void SelectChess()
@@ -53,14 +55,30 @@ public class ChessTouch : MonoBehaviour {
         else if (ChessOperation.instance.chessSelected2 == null)
         {
             ChessOperation.instance.chessSelected2 = this.gameObject.GetComponent<Chess>();
-            SwapTwoChess.instance.SwapTwoChessObj(ChessOperation.instance.chessSelected1, ChessOperation.instance.chessSelected2);
 
+            for (int i = 0; i < ChessOperation.instance.chessSelected1.chessNeighbour.Length; i++) 
+            {
+               if(ChessOperation.instance.chessSelected1.chessNeighbour[i] != null)
+                { 
+                if (ChessOperation.instance.chessSelected2.GetInstanceID() == ChessOperation.instance.chessSelected1.chessNeighbour[i].GetInstanceID()) //whether chessSelected 2 and chessSelected 1 are neighbour
+                    {
+                        canSwap = true;                 
+                    }
+                }
+            }
+     
+            if (canSwap )
+            {
+                SwapTwoChess.instance.SwapTwoChessObj(ChessOperation.instance.chessSelected1, ChessOperation.instance.chessSelected2);         
+            }
+           
         }
         else
         {
             //reset and prepare for the next click
             ChessOperation.instance.chessSelected1 = null;
             ChessOperation.instance.chessSelected2 = null;
+
         }
     }
 
