@@ -28,6 +28,9 @@ public class ChessOperation : MonoBehaviour {
     internal bool ifExistEliminateOption = false; //current board can eliminate
     internal Chess chessSelected1;  //the first chess that user selected
     internal Chess chessSelected2; //the second chess that user selected
+    internal bool isBusy = false; //is the system busy now (controling the user's operation)
+
+
     private void Awake()
     {
         instance = this; //this means current class's instance
@@ -36,34 +39,39 @@ public class ChessOperation : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
-        //Invoke("TestNeighbour", 1f);
-
-        //check current board whether need to be eliminated
+       //Invoke("TestNeighbour", 1f);
+       
        StartCoroutine("CheckIfCanEliminate");
 
     }
+    //check current board whether need to be eliminated
 
     IEnumerator CheckIfCanEliminate()
     {
-        yield return new WaitForSeconds(0.5f);
 
+        //yield return new WaitForSeconds(0.5f);
+        isBusy = true;
         AssignNeighbour(); //assign neighbour
-
+  
         CheckIfExitEliminateOption();
         //check whether current board has chess that can be eliminated
+
         yield return new WaitForSeconds(0.5f);
+
+        print("dddddddddddd");
 
         if (ifExistEliminateOption)
         {
+
             //eliminate all chesses that can be eliminated
             DestroryIfCanEliminate();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             // add new chess
             AddNewChessByTop();
-          //  yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             //new cheess falling down animation
             PlayNewChessDropDown();
-           
+            yield return new WaitForSeconds(0.2f);
             //iteratively check
 
             StartCoroutine("CheckIfCanEliminate");
@@ -71,6 +79,8 @@ public class ChessOperation : MonoBehaviour {
 
         else
         {
+            yield return new WaitForSeconds(0.2f);
+            isBusy = false;
             print("there is no chess to be eliminated");
         }
 
@@ -80,14 +90,18 @@ public class ChessOperation : MonoBehaviour {
     //check current board whether can be eliminated and set flag
     private void CheckIfExitEliminateOption()
     {
+        print("11111");
         for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
         {
+            print("444444444444");
             for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++)
             {
+                print("333333333");
                 ColumnManager.instance.colArray[col].chessArray[row].MakeFlagIfCanElimnate();
                 if (ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
                 {
-                    ifExistEliminateOption = true; 
+                    ifExistEliminateOption = true;
+                    print("222222222222");
                     // couldn't return here, or other chesses won't be set flag
                 }
 

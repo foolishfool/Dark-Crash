@@ -40,6 +40,7 @@ public class SwapTwoChess : MonoBehaviour
 
     internal void SwapTwoChessObj(Chess chess1, Chess chess2)
     {
+        ChessOperation.instance.isBusy = true; //when swapping users couldn't operation
         //check parameter
         if (chess1 == null || chess2 == null)
         {
@@ -103,6 +104,8 @@ public class SwapTwoChess : MonoBehaviour
 
         //reset parameter
         //@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
+        ChessOperation.instance.chessSelected1.UnSelectMe(); //become dark
+        ChessOperation.instance.chessSelected2.UnSelectMe();
         ChessOperation.instance.chessSelected1 = null;
         ChessOperation.instance.chessSelected2 = null;
         //check the elimination circularly

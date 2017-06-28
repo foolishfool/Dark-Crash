@@ -51,10 +51,12 @@ public class ChessTouch : MonoBehaviour {
         if (ChessOperation.instance.chessSelected1 == null)
         {
             ChessOperation.instance.chessSelected1 = this.gameObject.GetComponent<Chess>();  //the ChessTouch.cs and Chess.cs are both connect with a chess object
+            ChessOperation.instance.chessSelected1.SelectMe();
         }
         else if (ChessOperation.instance.chessSelected2 == null)
         {
             ChessOperation.instance.chessSelected2 = this.gameObject.GetComponent<Chess>();
+            ChessOperation.instance.chessSelected2.SelectMe();
 
             for (int i = 0; i < ChessOperation.instance.chessSelected1.chessNeighbour.Length; i++) 
             {
@@ -67,7 +69,7 @@ public class ChessTouch : MonoBehaviour {
                 }
             }
      
-            if (canSwap )
+            if (canSwap && ChessOperation.instance.isBusy == false )
             {
                 SwapTwoChess.instance.SwapTwoChessObj(ChessOperation.instance.chessSelected1, ChessOperation.instance.chessSelected2);         
             }
@@ -76,6 +78,8 @@ public class ChessTouch : MonoBehaviour {
         else
         {
             //reset and prepare for the next click
+            ChessOperation.instance.chessSelected1.UnSelectMe();
+            ChessOperation.instance.chessSelected2.UnSelectMe();
             ChessOperation.instance.chessSelected1 = null;
             ChessOperation.instance.chessSelected2 = null;
 

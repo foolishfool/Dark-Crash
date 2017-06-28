@@ -26,7 +26,7 @@ public class Chess : MonoBehaviour {
     public Chess[] chessNeighbour = new Chess[4]; //each chess's neighbour left/right/up/down neigbhour, represent by 0/1/2/3
 
     internal bool canEliminate = false; //whether current chess can be eliminated
-   
+    internal bool isSelected = false; //whether current chess is selected
 
     internal Column fromColumns;   //the clumn that contains the chess
 
@@ -173,4 +173,16 @@ public class Chess : MonoBehaviour {
         }
     }
 
+
+    internal void SelectMe()
+    {
+        isSelected = true;
+        this.transform.GetComponent<Renderer>().material.SetColor("_TintColor", new Color(1f,1f,1f,0.5f)); ;
+    }
+
+    internal void UnSelectMe()
+    {
+        isSelected = false;
+        this.transform.GetComponent<Renderer>().material.SetColor("_TintColor", new Color(0.5f, 0.5f, 0.5f, 0.5f)); ;
+    }
 }
