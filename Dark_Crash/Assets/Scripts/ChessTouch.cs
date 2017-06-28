@@ -46,7 +46,9 @@ public class ChessTouch : MonoBehaviour {
     }
 
     internal void SelectChess()
+
     {
+        
         //user clicks the first chess
         if (ChessOperation.instance.chessSelected1 == null)
         {
@@ -77,7 +79,7 @@ public class ChessTouch : MonoBehaviour {
         }
         else
         {
-            //reset and prepare for the next click
+            //reset and prepare for the next click when the two chesses are not neighbour
             ChessOperation.instance.chessSelected1.UnSelectMe();
             ChessOperation.instance.chessSelected2.UnSelectMe();
             ChessOperation.instance.chessSelected1 = null;

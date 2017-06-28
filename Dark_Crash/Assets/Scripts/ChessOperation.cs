@@ -7,7 +7,7 @@
  * 
  *    Description: 
  *      
- *     Dynamically manage the chess
+ *    Dynamically manage the chess
  * 
  *    Date: 2017
  *    
@@ -39,26 +39,25 @@ public class ChessOperation : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
-       //Invoke("TestNeighbour", 1f);
-       
+       //Invoke("TestNeighbour", 1f);     
        StartCoroutine("CheckIfCanEliminate");
-
     }
     //check current board whether need to be eliminated
 
     IEnumerator CheckIfCanEliminate()
     {
+        //@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
+        //if don't wait all the Start() may be implemented and have values for ChessArray[]
+        yield return new WaitForSeconds(0.2f);
 
-        //yield return new WaitForSeconds(0.5f);
         isBusy = true;
+
         AssignNeighbour(); //assign neighbour
   
         CheckIfExitEliminateOption();
         //check whether current board has chess that can be eliminated
 
         yield return new WaitForSeconds(0.5f);
-
-        print("dddddddddddd");
 
         if (ifExistEliminateOption)
         {
@@ -73,13 +72,12 @@ public class ChessOperation : MonoBehaviour {
             PlayNewChessDropDown();
             yield return new WaitForSeconds(0.2f);
             //iteratively check
-
             StartCoroutine("CheckIfCanEliminate");
         }
 
         else
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             isBusy = false;
             print("there is no chess to be eliminated");
         }
@@ -90,23 +88,21 @@ public class ChessOperation : MonoBehaviour {
     //check current board whether can be eliminated and set flag
     private void CheckIfExitEliminateOption()
     {
-        print("11111");
+        ifExistEliminateOption = false;//after every time check reset ifExistEliminateOption all it will always be true once it becomes true
+
         for (int col = 0; col < ColumnManager.instance.colArray.Length; col++)
         {
-            print("444444444444");
             for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++)
             {
-                print("333333333");
                 ColumnManager.instance.colArray[col].chessArray[row].MakeFlagIfCanElimnate();
-                if (ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
+                if ( ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
                 {
                     ifExistEliminateOption = true;
-                    print("222222222222");
                     // couldn't return here, or other chesses won't be set flag
                 }
-
             }
         }
+
     }
 
     private void DestroryIfCanEliminate()
@@ -116,7 +112,6 @@ public class ChessOperation : MonoBehaviour {
             for (int row = 0; row < ColumnManager.instance.colArray[col].chessArray.Count; row++)
             {
                 ColumnManager.instance.colArray[col].chessArray[row].DestroyChess();
-
             }
         }
 
@@ -167,8 +162,7 @@ public class ChessOperation : MonoBehaviour {
                 if (ColumnManager.instance.colArray[col].chessArray[row].canEliminate)
                 {
                     // the number of each column's adding chess
-                    ++ColumnManager.instance.colArray[col].needAddChessNumber;
-                   
+                    ++ColumnManager.instance.colArray[col].needAddChessNumber;                  
                 }
             }
         }
@@ -201,9 +195,6 @@ public class ChessOperation : MonoBehaviour {
 
 
 }
-
-
-
 
  /*
   *test methods  test assign neighbour methods
