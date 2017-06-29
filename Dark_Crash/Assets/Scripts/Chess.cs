@@ -168,11 +168,25 @@ public class Chess : MonoBehaviour {
     {
         if (canEliminate)
         {
+          
          //   iTween.Stop(this.gameObject);
             Destroy(this.gameObject);
+            Playeliminationparticles(20);
         }
     }
 
+    //play particals 
+ internal void Playeliminationparticles(int numparticles)
+    {
+        //elimination particels
+        ParticleSystem eliminationparticles = GameManager.instance.ParticleArray[2];
+        // Clone Particels object
+        ParticleSystem cloneparticles = Instantiate(eliminationparticles, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
+        //play particles
+        cloneparticles.Emit(numparticles);
+        Destroy(cloneparticles.gameObject, 2);//2 seconds later destory
+
+    }
 
     internal void SelectMe()
     {

@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
     public int IntRowNumber = 5; // the row number of current scene , dynamically generate columns
     public float ColumnSpace = 1f; // the space between clumns
     public float ChessScale = 1f;  // the scale of one single chess
-
+    public ParticleSystem[] ParticleArray;
     public static GameManager instance;  // can be use to pass values among classes in a hihg effieiency
     private void Awake()
     {

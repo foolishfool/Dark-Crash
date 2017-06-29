@@ -96,7 +96,7 @@ public class SwapTwoChess : MonoBehaviour
         //@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
         chess1.transform.parent = chess2Column.transform;   
         chess2.transform.parent = chess1Column.transform;
-        print(chess1Column.chessArray.Count + "@@@@@@@@@@@@@@@@");
+ 
         chess1Column.chessArray.RemoveAt(chess1ColumnIndex);
         chess1Column.chessArray.Insert(chess1ColumnIndex, chess2);
         chess2Column.chessArray.RemoveAt(chess2ColumnIndex);

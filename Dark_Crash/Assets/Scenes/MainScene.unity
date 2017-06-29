@@ -425,6 +425,10 @@ MonoBehaviour:
   IntRowNumber: 5
   ColumnSpace: 0.85
   ChessScale: 0.8
+  ParticleArray:
+  - {fileID: 198366423557032294, guid: 1f774e79d2218814780e69a8732882bc, type: 2}
+  - {fileID: 198388384587118710, guid: e2be155a01a638040b481b59779ba175, type: 2}
+  - {fileID: 198256512804641224, guid: a12c34a0b21a8544c8584d51f5178c5a, type: 2}
 --- !u!4 &1695897054
 Transform:
   m_ObjectHideFlags: 0
