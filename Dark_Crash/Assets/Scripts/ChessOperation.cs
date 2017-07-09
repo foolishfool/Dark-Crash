@@ -38,7 +38,9 @@ public class ChessOperation : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+        AudioManager.SetAudioBackgroundVolumns(0.4f);
+        AudioManager.SetAudioEffectVolumns(1f);
+        AudioManager.PlayBackground("Theme Song");
        //Invoke("TestNeighbour", 1f);     
        StartCoroutine("CheckIfCanEliminate");
     }
@@ -181,6 +183,7 @@ public class ChessOperation : MonoBehaviour {
                     ColumnManager.instance.colArray[col].chessArray.RemoveAt(row);
       
                 }
+                AudioManager.PlayAudioEffectA("Whop");
             }
         }
 
