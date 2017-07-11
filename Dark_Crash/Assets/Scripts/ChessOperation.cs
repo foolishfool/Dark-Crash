@@ -28,8 +28,10 @@ public class ChessOperation : MonoBehaviour {
     internal bool ifExistEliminateOption = false; //current board can eliminate
     internal Chess chessSelected1;  //the first chess that user selected
     internal Chess chessSelected2; //the second chess that user selected
+    internal Chess chessSwaped1; //the chess1 that just has been swaped, is used for swapping back
+    internal Chess chessSwaped2; //the chess2 that just has been swaped
     internal bool isBusy = false; //is the system busy now (controling the user's operation)
-
+    internal bool isSwapBack = false; // whether swap back
 
     private void Awake()
     {
@@ -81,7 +83,20 @@ public class ChessOperation : MonoBehaviour {
         {
             yield return new WaitForSeconds(0.5f);
             isBusy = false;
+
+            print(chessSwaped1 + "kkkkk" + chessSwaped2);
+            if (chessSwaped1 != null && chessSwaped2 != null)
+
+            {
+                print("2222");
+                isSwapBack = true;
+                SwapTwoChess.instance.SwapTwoChessObj(chessSwaped1, chessSwaped2);
+              
+            }
+                
             print("there is no chess to be eliminated");
+            
+            
         }
 
     }

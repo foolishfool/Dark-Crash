@@ -62,7 +62,12 @@ public class SwapTwoChess : MonoBehaviour
         int chess2ColumnIndex = -999;
         chess1Column = chess1.fromColumns;
         chess2Column = chess2.fromColumns;
-       
+
+        print("hess1.fromColumns" + chess1.fromColumns);
+        print("hess2.fromColumns" + chess2.fromColumns);
+
+        print("finshe djdjdjdjdjd"+ ChessOperation.instance.isSwapBack);
+
 
         if (chess1Column == null || chess2Column == null)
         {
@@ -72,22 +77,50 @@ public class SwapTwoChess : MonoBehaviour
         //get the index number of column that contains chess
         for (int i = 0; i < chess1Column.chessArray.Count; i++)
         {
-            if (chess1.GetInstanceID() == chess1Column.chessArray[i].GetInstanceID())
+            print(ChessOperation.instance.isSwapBack + "444444444");
+            if (!ChessOperation.instance.isSwapBack)
             {
-                chess1ColumnIndex = i;
+                if (chess1.GetInstanceID() == chess1Column.chessArray[i].GetInstanceID())
+                {
+                    print(chess1.GetInstanceID()+"111111");
+                    chess1ColumnIndex = i;
+                }
             }
+            //if swapBack chess1.fromColumns and chess2.fromColumn didn't change
+            else
+            {
+                if (chess1.GetInstanceID() == chess2Column.chessArray[i].GetInstanceID())
+                {
+                    chess1ColumnIndex = i;
+                }
+            }
+
         }
 
         for (int j = 0; j < chess2Column.chessArray.Count; j++)
         {
-            if (chess2.GetInstanceID() == chess2Column.chessArray[j].GetInstanceID())
-            {   
-                chess2ColumnIndex = j;       
+            if (!ChessOperation.instance.isSwapBack)
+            {
+                if (chess2.GetInstanceID() == chess2Column.chessArray[j].GetInstanceID())
+                {
+                    print(chess2.GetInstanceID() + "2222222");
+                    chess2ColumnIndex = j;
+                }
+
             }
+            else
+            {
+                if (chess2.GetInstanceID() == chess1Column.chessArray[j].GetInstanceID())
+                {
+                    chess2ColumnIndex = j;
+                }
+            }
+
         }
         if (chess1ColumnIndex == -999 || chess2ColumnIndex == -999)
         {
             //because parameter error, call current level again
+            Debug.LogError("SwapTwoChess.cs/SwapTwoChessItem parameter error ColumnIndex = -999");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
            // Application.LoadLevel(Application.loadedLevel); //old version
         }
@@ -99,18 +132,49 @@ public class SwapTwoChess : MonoBehaviour
  
         chess1Column.chessArray.RemoveAt(chess1ColumnIndex);
         chess1Column.chessArray.Insert(chess1ColumnIndex, chess2);
+        print(chess1Column.chessArray[chess1ColumnIndex].GetInstanceID() + "66666666");
         chess2Column.chessArray.RemoveAt(chess2ColumnIndex);
         chess2Column.chessArray.Insert(chess2ColumnIndex, chess1);
+        print(chess2Column.chessArray[chess2ColumnIndex].GetInstanceID() + "7777777");
 
-        //reset parameter
-        //@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
-        ChessOperation.instance.chessSelected1.UnSelectMe(); //become dark
-        ChessOperation.instance.chessSelected2.UnSelectMe();
-        ChessOperation.instance.chessSelected1 = null;
-        ChessOperation.instance.chessSelected2 = null;
-        ChessOperation.instance.isBusy = false;
+
 
         //check the elimination circularly
         ChessOperation.instance.StartCoroutine("CheckIfCanEliminate");
+
+        if (ChessOperation.instance.chessSelected1 != null && ChessOperation.instance.chessSelected2 != null)
+        {
+            //reset parameter
+            //@@@@@@@@@@@@@@@@@difficulty@@@@@@@@@@@@@@
+            ChessOperation.instance.chessSelected1.UnSelectMe(); //become dark
+            ChessOperation.instance.chessSelected2.UnSelectMe();
+
+            ChessOperation.instance.chessSwaped1 = ChessOperation.instance.chessSelected1;
+            ChessOperation.instance.chessSwaped2 = ChessOperation.instance.chessSelected2;
+
+            ChessOperation.instance.chessSelected1 = null;
+            ChessOperation.instance.chessSelected2 = null;
+
+            print(ChessOperation.instance.isSwapBack + ";;;;;;;");
+
+
+
+            ChessOperation.instance.isBusy = false;
+        }
+        else
+        {
+            if (ChessOperation.instance.isSwapBack)
+            {
+                //reset chessSwap
+                ChessOperation.instance.chessSwaped1 = null;
+                ChessOperation.instance.chessSwaped2 = null;
+                ChessOperation.instance.isSwapBack = false;
+                print("333333333    ");
+            }
+        }
+
+
+
+
     }
 }
